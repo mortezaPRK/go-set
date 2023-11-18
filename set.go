@@ -1,5 +1,10 @@
 package set
 
+import (
+	"fmt"
+	"strings"
+)
+
 type valType struct{}
 
 var val valType
@@ -10,6 +15,10 @@ type Set[T comparable] struct {
 
 func New[T comparable](size int) *Set[T] {
 	return &Set[T]{c: make(map[T]valType, size)}
+}
+
+func From[T comparable](sl ...T) *Set[T] {
+	return New[T](len(sl)).Add(sl...)
 }
 
 func FromSlice[T comparable](sl []T) *Set[T] {
@@ -159,4 +168,25 @@ func (s *Set[T]) ToList() []T {
 		out = append(out, k)
 	}
 	return out
+}
+
+// Call fn for each item in set.
+func (s *Set[T]) ForEach(fn func(item T)) {
+	for k := range s.c {
+		fn(k)
+	}
+}
+
+// Return a string representation of set elements.
+func (s *Set[T]) String() string {
+	sb := strings.Builder{}
+	sb.WriteString(fmt.Sprintf("[%d]{", len(s.c)))
+	loopDelimiter := ""
+	for i := range s.c {
+		sb.WriteString(loopDelimiter)
+		loopDelimiter = ","
+		sb.WriteString(fmt.Sprint(i))
+	}
+	sb.WriteString("}")
+	return sb.String()
 }

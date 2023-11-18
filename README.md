@@ -37,11 +37,21 @@ s.Remove(1)
 ### Helpers:
 
 ```go
+set.From("a", "b", "d")
+// s: {a, b, d}
+
 s := set.FromSlice([]int{1, 2, 3})
 // s: {1, 2, 3}
 
 s.Pop()
 // 1 or 2 or 3 (randomly)
+
+s.ForEach(func(e interface{}) {
+    fmt.Println(e)
+})
+// 3
+// 1
+// 2
 
 s.ToList()
 // []int{2, 3, 1}

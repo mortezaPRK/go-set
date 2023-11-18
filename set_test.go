@@ -9,6 +9,12 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestFrom(t *testing.T) {
+	t.Parallel()
+
+	require.ElementsMatch(t, set.From(1, 2, 3).ToList(), set.New[int](0).Add(1, 2, 3).ToList())
+}
+
 func TestFromSlice(t *testing.T) {
 	t.Parallel()
 
@@ -373,6 +379,29 @@ func TestToList(t *testing.T) {
 	elements := s.ToList()
 
 	require.ElementsMatch(t, []int{1, 2, 4}, elements)
+}
+
+func TestForEach(t *testing.T) {
+	t.Parallel()
+
+	input := []int{1, 2, 3}
+	s := set.New[int](len(input)).Add(input...)
+	elements := make([]int, 0, s.Len())
+
+	s.ForEach(func(element int) {
+		elements = append(elements, element)
+	})
+
+	require.ElementsMatch(t, input, elements)
+}
+
+func TestString(t *testing.T) {
+	t.Parallel()
+
+	s := set.New[int](0)
+
+	require.Equal(t, "[0]{}", s.String())
+	require.Equal(t, "[3]{1,2,3}", s.Add(1, 2, 3).String())
 }
 
 func toString(sets ...*set.Set[int]) string {
