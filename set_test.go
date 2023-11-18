@@ -272,6 +272,11 @@ func TestIntersection(t *testing.T) {
 			},
 			expected: []int{1},
 		},
+		{
+			source:   set.New[int](0).Add(1, 2, 3),
+			targets:  []*set.Set[int]{},
+			expected: []int{1, 2, 3},
+		},
 	} {
 		tc := tc
 		name := fmt.Sprintf("intersecting %s with %s", toString(tc.source), toString(tc.targets...))

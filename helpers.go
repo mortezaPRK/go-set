@@ -1,7 +1,7 @@
 package set
 
 func findSmallestAndBigestIndex[T comparable](items []*Set[T]) (smallest int, biggest int) {
-	if len(items) == 0 {
+	if len(items) <= 1 {
 		return
 	}
 
