@@ -1,3 +1,4 @@
+// Package set provides a Set data structure.
 package set
 
 import (
