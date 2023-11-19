@@ -270,11 +270,11 @@ func TestIntersection(t *testing.T) {
 		{
 			source: set.New[int](0).Add(1, 2, 3),
 			targets: []*set.Set[int]{
-				set.New[int](0).Add(1, 2),
-				set.New[int](0).Add(1, 3),
-				set.New[int](0).Add(1, 4, 5),
 				set.New[int](0).Add(1, 4, 5, 6),
+				set.New[int](0).Add(1, 3),
+				set.New[int](0).Add(1),
 				set.New[int](0).Add(1, 4, 5, 6, 7),
+				set.New[int](0).Add(1, 4, 5),
 			},
 			expected: []int{1},
 		},
@@ -398,10 +398,23 @@ func TestForEach(t *testing.T) {
 func TestString(t *testing.T) {
 	t.Parallel()
 
-	s := set.New[int](0)
+	require.Equal(t, "[0]{}", set.New[int](0).String())
 
-	require.Equal(t, "[0]{}", s.String())
-	require.Equal(t, "[3]{1,2,3}", s.Add(1, 2, 3).String())
+	actual := set.New[int](3).Add(1, 2, 3).String()
+
+	if strings.HasPrefix(actual, "[3]{") {
+		actual = actual[4:]
+	} else {
+		t.Fatalf("expected prefix: [3]{, actual: %s", actual)
+	}
+
+	if strings.HasSuffix(actual, "}") {
+		actual = actual[:len(actual)-1]
+	} else {
+		t.Fatalf("expected suffix: }, actual: %s", actual)
+	}
+
+	require.ElementsMatch(t, []string{"1", "2", "3"}, strings.Split(actual, ","))
 }
 
 func toString(sets ...*set.Set[int]) string {
