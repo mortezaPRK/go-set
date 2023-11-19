@@ -107,17 +107,17 @@ func (s *Set[T]) Len() int {
 
 // Intersection return a new set with elements common to the set and all others.
 func (s *Set[T]) Intersection(others ...*Set[T]) *Set[T] {
-	sets := append([]*Set[T]{s}, others...)
-	smallest, _ := findSmallestAndBigestIndex(sets)
-	needle := sets[smallest]
-	copy(sets[smallest:], sets[smallest+1:])
-	sets = sets[:len(sets)-1]
+	others = append(others, s)
+	smallest, _ := findSmallestAndBigestIndex(others)
+	needle := others[smallest]
+	copy(others[smallest:], others[smallest+1:])
+	others = others[:len(others)-1]
 
 	out := New[T](len(needle.c))
 
 	for k := range needle.c {
 		shouldAdd := true
-		for _, set := range sets {
+		for _, set := range others {
 			if _, ok := set.c[k]; !ok {
 				shouldAdd = false
 				break
