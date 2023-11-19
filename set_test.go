@@ -114,15 +114,15 @@ func TestClone(t *testing.T) {
 func TestMerge(t *testing.T) {
 	t.Parallel()
 
-	s_0 := set.New[int](0).Add(0, 1)
-	s_1 := set.New[int](0).Add(2, 3)
-	s_2 := set.New[int](0).Add(2, 3, 4)
-	s_3 := set.New[int](0).Add(5, 6)
+	s0 := set.New[int](0).Add(0, 1)
+	s1 := set.New[int](0).Add(2, 3)
+	s2 := set.New[int](0).Add(2, 3, 4)
+	s3 := set.New[int](0).Add(5, 6)
 
-	ns := s_0.Merge(s_1, s_2, s_3)
+	ns := s0.Merge(s1, s2, s3)
 
-	require.Same(t, s_0, ns)
-	require.ElementsMatch(t, s_0.ToList(), []int{0, 1, 2, 3, 4, 5, 6})
+	require.Same(t, s0, ns)
+	require.ElementsMatch(t, s0.ToList(), []int{0, 1, 2, 3, 4, 5, 6})
 }
 
 func TestIsDisjoint(t *testing.T) {
