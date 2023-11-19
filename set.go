@@ -178,6 +178,21 @@ func (s *Set[T]) ForEach(fn func(item T)) {
 	}
 }
 
+// Equal returns true if set is equal to other.
+func (s *Set[T]) Equal(other *Set[T]) bool {
+	if len(s.c) != len(other.c) {
+		return false
+	}
+
+	for k := range s.c {
+		if _, ok := other.c[k]; !ok {
+			return false
+		}
+	}
+
+	return true
+}
+
 // String returns a string representation of set elements.
 func (s *Set[T]) String() string {
 	sb := strings.Builder{}

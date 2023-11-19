@@ -92,4 +92,7 @@ set.From(2,4,5).Diff(
 )
 // {5}
 
+// Check equality between two sets:
+set.From(1,2,3).Equal(set.From(3,2,1))
+// true
 ```

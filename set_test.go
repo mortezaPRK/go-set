@@ -395,6 +395,50 @@ func TestForEach(t *testing.T) {
 	require.ElementsMatch(t, input, elements)
 }
 
+func TestEqual(t *testing.T) {
+	t.Parallel()
+
+	type matrix struct {
+		source   *set.Set[int]
+		target   *set.Set[int]
+		expected bool
+	}
+
+	for _, tc := range []matrix{
+		{
+			source:   set.New[int](0).Add(1, 2, 3),
+			target:   set.New[int](0).Add(2, 1, 3),
+			expected: true,
+		},
+		{
+			source:   set.New[int](0).Add(1, 2),
+			target:   set.New[int](0).Add(2, 1, 3),
+			expected: false,
+		},
+		{
+			source:   set.New[int](0).Add(1, 2, 4),
+			target:   set.New[int](0).Add(2, 1, 3),
+			expected: false,
+		},
+		{
+			source:   set.New[int](0).Add(),
+			target:   set.New[int](0).Add(),
+			expected: true,
+		},
+	} {
+		tc := tc
+		name := fmt.Sprintf("%s == %s ? (%t)", toString(tc.source), toString(tc.target), tc.expected)
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+
+			require.Equal(t, tc.expected, tc.source.Equal(tc.target))
+			require.Equal(t, tc.expected, tc.target.Equal(tc.source))
+			require.True(t, tc.target.Equal(tc.target))
+			require.True(t, tc.source.Equal(tc.source))
+		})
+	}
+}
+
 func TestString(t *testing.T) {
 	t.Parallel()
 
