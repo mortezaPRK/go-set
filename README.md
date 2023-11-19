@@ -1,5 +1,10 @@
 # GoSet
 
+[![codecov](https://codecov.io/gh/mortezaPRK/go-set/graph/badge.svg?token=GXR5EANAYQ)](https://codecov.io/gh/mortezaPRK/go-set)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+
+
 GoSet is a simple set implementation in Go. It is based on the built-in map type.
 
 > The `set` is not concurrency safe
