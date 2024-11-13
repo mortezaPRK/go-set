@@ -1,3 +1,6 @@
+> # **DEPRECATED. Use [hashicorp/go-set](https://github.com/hashicorp/go-set) instead**
+
+
 # GoSet
 
 [![codecov](https://codecov.io/gh/mortezaPRK/go-set/graph/badge.svg?token=GXR5EANAYQ)](https://codecov.io/gh/mortezaPRK/go-set)
